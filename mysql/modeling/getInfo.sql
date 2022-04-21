@@ -91,3 +91,27 @@ WHERE ct.id = pr.category and ct.parent=pa.id and pa.parent = paa.id) 'top 카�
 ,pr.brand
 ,pr.stock '재고'
 FROM Product pr;
+
+
+
+-- 구매내역
+
+SELECT pr.title
+,pr.price
+,pr.discount
+,pr.seller
+,od.id 'order number'
+,it.quantity
+,(SELECT value 
+FROM code a
+WHERE it.statusCD = a.id) 'status'
+FROM item it left join product pr on pr.id = it.product_id
+left join orders od on it.id= od.item_id
+where od.user_id=1;
+
+
+-- 메인화면
+SELECT name
+FROM category
+WHERE parent =0;
+
